@@ -25,7 +25,7 @@ public class EstadoController {
   @Autowired
   private EstadoService service;
 
-  @PostMapping(value = "/criar")
+  @PostMapping(value = "/")
   public ResponseEntity<EstadoDTO> create(@RequestBody EstadoDTO estado) {
     EstadoDTO criarEstado = service.create(estado);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(criarEstado.getId()).toUri();

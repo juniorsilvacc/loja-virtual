@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import com.lojavirtual.backend.domain.dtos.EstadoDTO;
 import com.lojavirtual.backend.domain.models.Estado;
 import com.lojavirtual.backend.repositories.EstadoRepository;
+import com.lojavirtual.backend.services.exceptions.DataIntegrityViolationException;
+import com.lojavirtual.backend.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class EstadoService {
@@ -23,7 +25,7 @@ public class EstadoService {
     Optional<Estado> nomeEstado = repository.findByNome(estado.getNome());
 
     if(nomeEstado.isPresent()) {
-      System.out.println("O cadastro desse estado já existe");
+      throw new DataIntegrityViolationException("O nome desse estado já existe");
     }
 
     Estado novoEstado = new Estado(estado);
@@ -39,8 +41,8 @@ public class EstadoService {
   public void remove(Integer id) {
     Optional<Estado> idEstado = repository.findById(id);
 
-    if(idEstado.isEmpty()) {
-      System.out.println("Estado não encontrado");
+    if(!idEstado.isPresent()) {
+      throw new ObjectNotFoundException(String.format("Estado com id: %d não encontrado", id));
     }
 
     repository.deleteById(id);
@@ -53,11 +55,8 @@ public class EstadoService {
   }
 
   public EstadoDTO findById(Integer id) {
-    Estado estado = repository.findById(id).get();
-
-    if(estado == null) {
-      System.out.println("Estado não encontrado");
-    }
+    Estado estado = repository.findById(id)
+      .orElseThrow(() -> new ObjectNotFoundException(String.format("Estado com id: %d não encontrado", id)));
 
     EstadoDTO dto = new EstadoDTO(estado);
 
@@ -70,13 +69,13 @@ public class EstadoService {
     if(!oldEstado.isPresent()) {
       System.out.println("Estado não encontrado");
     }
-
+    estado.setDataAtualizacao(new Date());
     BeanUtils.copyProperties(estado, oldEstado.get(), "id");
 
     Estado salvarEstado = repository.save(oldEstado.get());
     
     EstadoDTO dto = new EstadoDTO(salvarEstado);
-
+ 
     return dto;
   }
   
