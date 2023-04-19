@@ -1,41 +1,31 @@
-package com.lojavirtual.backend.domain.models;
+package com.lojavirtual.backend.domain.dtos;
 
 import java.io.Serializable;
 
-import com.lojavirtual.backend.domain.dtos.EstadoDTO;
+import com.lojavirtual.backend.domain.models.Cidade;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+public class CidadeDTO implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
-@Entity
-@Table(name = "tb_estado")
-public class Estado implements Serializable {
-
-  private static final long serialVersionUID = 1L;
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
-  
   private String nome;
-  private String sigla;
 
-  public Estado() {
+  private Integer estado;
+
+  public CidadeDTO() {
   }
 
-  public Estado(Integer id, String nome, String sigla) {
+  public CidadeDTO(Integer id, String nome, String sigla, Integer estado) {
     this.id = id;
     this.nome = nome;
-    this.sigla = sigla;
+    this.estado = estado;
   }
 
-  public Estado(EstadoDTO obj) {
+  public CidadeDTO(Cidade obj) {
     this.id = obj.getId();
     this.nome = obj.getNome();
-    this.sigla = obj.getSigla();
+    this.estado = obj.getEstado().getId();
   }
 
   public Integer getId() {
@@ -54,12 +44,12 @@ public class Estado implements Serializable {
     this.nome = nome;
   }
 
-  public String getSigla() {
-    return sigla;
+  public Integer getEstado() {
+    return estado;
   }
 
-  public void setSigla(String sigla) {
-    this.sigla = sigla;
+  public void setEstado(Integer estado) {
+    this.estado = estado;
   }
 
   @Override
@@ -78,7 +68,7 @@ public class Estado implements Serializable {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    Estado other = (Estado) obj;
+    CidadeDTO other = (CidadeDTO) obj;
     if (id == null) {
       if (other.id != null)
         return false;

@@ -2,17 +2,19 @@ package com.lojavirtual.backend.domain.models;
 
 import java.io.Serializable;
 
-import com.lojavirtual.backend.domain.dtos.EstadoDTO;
+import com.lojavirtual.backend.domain.dtos.CidadeDTO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_estado")
-public class Estado implements Serializable {
+@Table(name = "tb_cidade")
+public class Cidade implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -21,21 +23,23 @@ public class Estado implements Serializable {
   private Integer id;
   
   private String nome;
-  private String sigla;
 
-  public Estado() {
+  @ManyToOne
+  @JoinColumn(name = "estado_id")
+  private Estado estado;
+
+  public Cidade() {
   }
 
-  public Estado(Integer id, String nome, String sigla) {
+  public Cidade(Integer id, String nome, String sigla, Estado estado) {
     this.id = id;
     this.nome = nome;
-    this.sigla = sigla;
+    this.estado = estado;
   }
 
-  public Estado(EstadoDTO obj) {
+  public Cidade(CidadeDTO obj) {
     this.id = obj.getId();
     this.nome = obj.getNome();
-    this.sigla = obj.getSigla();
   }
 
   public Integer getId() {
@@ -54,12 +58,12 @@ public class Estado implements Serializable {
     this.nome = nome;
   }
 
-  public String getSigla() {
-    return sigla;
+  public Estado getEstado() {
+    return estado;
   }
 
-  public void setSigla(String sigla) {
-    this.sigla = sigla;
+  public void setEstado(Estado estado) {
+    this.estado = estado;
   }
 
   @Override
@@ -78,7 +82,7 @@ public class Estado implements Serializable {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    Estado other = (Estado) obj;
+    Cidade other = (Cidade) obj;
     if (id == null) {
       if (other.id != null)
         return false;
@@ -86,5 +90,5 @@ public class Estado implements Serializable {
       return false;
     return true;
   }
-
+ 
 }

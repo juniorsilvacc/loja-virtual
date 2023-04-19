@@ -1,6 +1,5 @@
 package com.lojavirtual.backend.services;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,7 +28,6 @@ public class EstadoService {
     }
 
     Estado novoEstado = new Estado(estado);
-    novoEstado.setDataCriacao(new Date());
     
     Estado estadoSalvo = repository.save(novoEstado);
     
@@ -69,7 +67,7 @@ public class EstadoService {
     if(!oldEstado.isPresent()) {
       System.out.println("Estado não encontrado");
     }
-    estado.setDataAtualizacao(new Date());
+
     BeanUtils.copyProperties(estado, oldEstado.get(), "id");
 
     Estado salvarEstado = repository.save(oldEstado.get());
