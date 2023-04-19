@@ -1,33 +1,30 @@
 package com.lojavirtual.backend.domain.dtos;
 
-import java.util.Date;
+import java.io.Serializable;
+
 import com.lojavirtual.backend.domain.models.Estado;
 
-public class EstadoDTO {
+public class EstadoDTO implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
   private Integer id;
   private String nome;
   private String sigla;
-  private Date dataCriacao;
-  private Date dataAtualizacao;
 
   public EstadoDTO() {
   }
 
-  public EstadoDTO(Integer id, String nome, String sigla, Date dataCriacao, Date dataAtualizacao) {
+  public EstadoDTO(Integer id, String nome, String sigla) {
     this.id = id;
     this.nome = nome;
     this.sigla = sigla;
-    this.dataCriacao = dataCriacao;
-    this.dataAtualizacao = dataAtualizacao;
   }
 
   public EstadoDTO(Estado obj) {
     this.id = obj.getId();
     this.nome = obj.getNome();
     this.sigla = obj.getSigla();
-    this.dataCriacao = obj.getDataCriacao();
-    this.dataAtualizacao = obj.getDataAtualizacao();
   }
 
   public Integer getId() {
@@ -52,22 +49,6 @@ public class EstadoDTO {
 
   public void setSigla(String sigla) {
     this.sigla = sigla;
-  }
-
-  public Date getDataCriacao() {
-    return dataCriacao;
-  }
-
-  public void setDataCriacao(Date dataCriacao) {
-    this.dataCriacao = dataCriacao;
-  }
-
-  public Date getDataAtualizacao() {
-    return dataAtualizacao;
-  }
-
-  public void setDataAtualizacao(Date dataAtualizacao) {
-    this.dataAtualizacao = dataAtualizacao;
   }
 
   @Override

@@ -1,31 +1,31 @@
 package com.lojavirtual.backend.domain.dtos;
 
-import java.util.Date;
+import java.io.Serializable;
 
 import com.lojavirtual.backend.domain.models.Cidade;
 
-public class CidadeDTO {
+public class CidadeDTO implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
   private Integer id;
   private String nome;
-  private Date dataCriacao;
-  private Date dataAtualizacao;
+
+  private Integer estado;
 
   public CidadeDTO() {
   }
 
-  public CidadeDTO(Integer id, String nome, String sigla, Date dataCriacao, Date dataAtualizacao) {
+  public CidadeDTO(Integer id, String nome, String sigla, Integer estado) {
     this.id = id;
     this.nome = nome;
-    this.dataCriacao = dataCriacao;
-    this.dataAtualizacao = dataAtualizacao;
+    this.estado = estado;
   }
 
   public CidadeDTO(Cidade obj) {
     this.id = obj.getId();
     this.nome = obj.getNome();
-    this.dataCriacao = obj.getDataCriacao();
-    this.dataAtualizacao = obj.getDataAtualizacao();
+    this.estado = obj.getEstado().getId();
   }
 
   public Integer getId() {
@@ -44,20 +44,12 @@ public class CidadeDTO {
     this.nome = nome;
   }
 
-  public Date getDataCriacao() {
-    return dataCriacao;
+  public Integer getEstado() {
+    return estado;
   }
 
-  public void setDataCriacao(Date dataCriacao) {
-    this.dataCriacao = dataCriacao;
-  }
-
-  public Date getDataAtualizacao() {
-    return dataAtualizacao;
-  }
-
-  public void setDataAtualizacao(Date dataAtualizacao) {
-    this.dataAtualizacao = dataAtualizacao;
+  public void setEstado(Integer estado) {
+    this.estado = estado;
   }
 
   @Override

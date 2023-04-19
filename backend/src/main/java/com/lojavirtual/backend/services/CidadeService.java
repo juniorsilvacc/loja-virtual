@@ -1,6 +1,5 @@
 package com.lojavirtual.backend.services;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.lojavirtual.backend.domain.dtos.CidadeDTO;
 import com.lojavirtual.backend.domain.models.Cidade;
+import com.lojavirtual.backend.domain.models.Estado;
 import com.lojavirtual.backend.repositories.CidadeRepository;
+import com.lojavirtual.backend.repositories.EstadoRepository;
 import com.lojavirtual.backend.services.exceptions.DataIntegrityViolationException;
 import com.lojavirtual.backend.services.exceptions.ObjectNotFoundException;
 
@@ -21,21 +22,28 @@ public class CidadeService {
   @Autowired
   private CidadeRepository repository;
 
-  public CidadeDTO create(CidadeDTO cidade) {
+  @Autowired
+  private EstadoRepository estadoRepository;
+
+  public CidadeDTO create(Cidade cidade) {
+    Integer estadoID = cidade.getEstado().getId();
+    Optional<Estado> estado = estadoRepository.findById(estadoID);
+
+    if(!estado.isPresent()) {
+      throw new ObjectNotFoundException(String.format("Estado com id: %d não encontrado", estadoID));
+    }
+
     Optional<Cidade> nomeCidade = repository.findByNome(cidade.getNome());
 
     if(nomeCidade.isPresent()) {
       throw new DataIntegrityViolationException("O nome desse cidade já existe");
     }
 
-    Cidade novoCidade = new Cidade(cidade);
-    novoCidade.setDataCriacao(new Date());
+    Cidade criar = repository.save(cidade);
     
-    Cidade cidadeSalvo = repository.save(novoCidade);
-    
-    CidadeDTO dto = new CidadeDTO(cidadeSalvo);
+    CidadeDTO dto = new CidadeDTO(criar);
 
-    return dto;
+    return dto; 
   }
 
   public void remove(Integer id) {
@@ -63,13 +71,13 @@ public class CidadeService {
     return dto;
   }
 
-  public CidadeDTO update(CidadeDTO cidade, Integer id) {
+  public CidadeDTO update(Cidade cidade, Integer id) {
     Optional<Cidade> oldCidade = repository.findById(id);
 
     if(!oldCidade.isPresent()) {
       System.out.println("Cidade não encontrado");
     }
-    cidade.setDataAtualizacao(new Date());
+
     BeanUtils.copyProperties(cidade, oldCidade.get(), "id");
 
     Cidade salvarCidade = repository.save(oldCidade.get());

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lojavirtual.backend.domain.dtos.CidadeDTO;
+import com.lojavirtual.backend.domain.models.Cidade;
 import com.lojavirtual.backend.services.CidadeService;
 
 @RestController
@@ -26,7 +27,7 @@ public class CidadeController {
   private CidadeService service;
 
   @PostMapping(value = "/")
-  public ResponseEntity<CidadeDTO> create(@RequestBody CidadeDTO cidade) {
+  public ResponseEntity<CidadeDTO> create(@RequestBody Cidade cidade) {
     CidadeDTO criarCidade = service.create(cidade);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(criarCidade.getId())
         .toUri();
@@ -53,7 +54,7 @@ public class CidadeController {
   }
 
   @PutMapping(value = "/{id}")
-  public ResponseEntity<CidadeDTO> update(@RequestBody CidadeDTO cidade, @PathVariable Integer id) {
+  public ResponseEntity<CidadeDTO> update(@RequestBody Cidade cidade, @PathVariable Integer id) {
     CidadeDTO atualizarCidade = service.update(cidade, id);
 
     return ResponseEntity.ok().body(atualizarCidade);
