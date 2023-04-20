@@ -63,7 +63,7 @@ public class PermissaoService {
     Optional<Permissao> oldPermissao = repository.findById(id);
 
     if(!oldPermissao.isPresent()) {
-      System.out.println("Permissao não encontrada");
+      throw new ObjectNotFoundException(String.format("Permissao com id: %d não encontrada", id));
     }
 
     BeanUtils.copyProperties(permissao, oldPermissao.get(), "id");

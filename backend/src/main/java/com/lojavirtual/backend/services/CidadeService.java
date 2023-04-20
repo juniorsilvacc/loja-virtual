@@ -75,7 +75,7 @@ public class CidadeService {
     Optional<Cidade> oldCidade = repository.findById(id);
 
     if(!oldCidade.isPresent()) {
-      System.out.println("Cidade não encontrado");
+      throw new ObjectNotFoundException(String.format("Estado com id: %d não encontrado", oldCidade));
     }
 
     BeanUtils.copyProperties(cidade, oldCidade.get(), "id");

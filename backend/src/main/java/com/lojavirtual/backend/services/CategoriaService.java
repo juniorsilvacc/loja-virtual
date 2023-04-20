@@ -63,7 +63,7 @@ public class CategoriaService {
     Optional<Categoria> oldCategoria = repository.findById(id);
 
     if(!oldCategoria.isPresent()) {
-      System.out.println("Categoria não encontrada");
+      throw new ObjectNotFoundException(String.format("Categoria com id: %d não encontrada", id));
     }
 
     BeanUtils.copyProperties(categoria, oldCategoria.get(), "id");

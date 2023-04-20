@@ -65,7 +65,7 @@ public class EstadoService {
     Optional<Estado> oldEstado = repository.findById(id);
 
     if(!oldEstado.isPresent()) {
-      System.out.println("Estado não encontrado");
+      throw new ObjectNotFoundException(String.format("Estado com id: %d não encontrado", id));
     }
 
     BeanUtils.copyProperties(estado, oldEstado.get(), "id");

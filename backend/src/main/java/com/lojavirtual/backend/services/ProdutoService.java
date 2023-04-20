@@ -63,7 +63,7 @@ public class ProdutoService {
     Optional<Produto> oldProduto = repository.findById(id);
 
     if(!oldProduto.isPresent()) {
-      System.out.println("Produto não encontrado");
+      throw new ObjectNotFoundException(String.format("Produto com id: %d não encontrado", id));
     }
 
     BeanUtils.copyProperties(produto, oldProduto.get(), "id");
