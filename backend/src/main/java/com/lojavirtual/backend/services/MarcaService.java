@@ -63,7 +63,7 @@ public class MarcaService {
     Optional<Marca> oldMarca = repository.findById(id);
 
     if(!oldMarca.isPresent()) {
-      System.out.println("Marca não encontrada");
+      throw new ObjectNotFoundException(String.format("Marca com id: %d não encontrada", id));
     }
 
     BeanUtils.copyProperties(marca, oldMarca.get(), "id");
