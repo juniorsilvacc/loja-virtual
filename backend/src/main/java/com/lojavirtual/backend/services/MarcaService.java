@@ -24,7 +24,7 @@ public class MarcaService {
     Optional<Marca> nomeMarca = repository.findByNome(marca.getNome());
 
     if(nomeMarca.isPresent()) {
-      throw new DataIntegrityViolationException("O nome desse marca já existe");
+      throw new DataIntegrityViolationException("O nome dessa marca já existe");
     }
 
     Marca salvarMarca = repository.save(marca);
