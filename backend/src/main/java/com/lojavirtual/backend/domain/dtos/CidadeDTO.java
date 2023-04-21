@@ -11,21 +11,17 @@ public class CidadeDTO implements Serializable {
   private Integer id;
   private String nome;
 
-  private Integer estado;
-
   public CidadeDTO() {
   }
 
-  public CidadeDTO(Integer id, String nome, String sigla, Integer estado) {
+  public CidadeDTO(Integer id, String nome, String sigla) {
     this.id = id;
     this.nome = nome;
-    this.estado = estado;
   }
 
   public CidadeDTO(Cidade obj) {
     this.id = obj.getId();
     this.nome = obj.getNome();
-    this.estado = obj.getEstado().getId();
   }
 
   public Integer getId() {
@@ -42,14 +38,6 @@ public class CidadeDTO implements Serializable {
 
   public void setNome(String nome) {
     this.nome = nome;
-  }
-
-  public Integer getEstado() {
-    return estado;
-  }
-
-  public void setEstado(Integer estado) {
-    this.estado = estado;
   }
 
   @Override

@@ -10,11 +10,11 @@ public class MarcaDTO implements Serializable {
 
   private Integer id;
   private String nome;
-
+  
   public MarcaDTO() {
   }
 
-  public MarcaDTO(Integer id, String nome, String sigla) {
+  public MarcaDTO(Integer id, String nome) {
     this.id = id;
     this.nome = nome;
   }

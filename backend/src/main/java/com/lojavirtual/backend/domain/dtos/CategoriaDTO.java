@@ -1,8 +1,12 @@
 package com.lojavirtual.backend.domain.dtos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lojavirtual.backend.domain.models.Categoria;
+import com.lojavirtual.backend.domain.models.Produto;
 
 public class CategoriaDTO implements Serializable {
 	
@@ -10,18 +14,22 @@ public class CategoriaDTO implements Serializable {
 
   private Integer id;
   private String nome;
+  
+  @JsonIgnore
+  private List<Produto> produtos = new ArrayList<>();
 
   public CategoriaDTO() {
   }
-
-  public CategoriaDTO(Integer id, String nome, String sigla) {
+  
+  public CategoriaDTO(Integer id, String nome, List<Produto> produtos) {
     this.id = id;
     this.nome = nome;
+    this.produtos = produtos;
   }
-
   public CategoriaDTO(Categoria obj) {
-    this.id = obj.getId();
+    this.id = obj.getId(); 
     this.nome = obj.getNome();
+    this.produtos = obj.getProdutos();
   }
 
   public Integer getId() {
@@ -38,6 +46,14 @@ public class CategoriaDTO implements Serializable {
 
   public void setNome(String nome) {
     this.nome = nome;
+  }
+
+  public List<Produto> getProdutos() {
+    return produtos;
+  }
+
+  public void setProdutos(List<Produto> produtos) {
+    this.produtos = produtos;
   }
 
   @Override

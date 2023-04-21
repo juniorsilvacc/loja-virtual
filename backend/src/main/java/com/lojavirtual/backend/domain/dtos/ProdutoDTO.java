@@ -1,7 +1,11 @@
 package com.lojavirtual.backend.domain.dtos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.lojavirtual.backend.domain.models.Categoria;
+import com.lojavirtual.backend.domain.models.Marca;
 import com.lojavirtual.backend.domain.models.Produto;
 
 public class ProdutoDTO implements Serializable {
@@ -14,15 +18,20 @@ public class ProdutoDTO implements Serializable {
   private Double valorCusto;
   private Double valorVenda;
 
+  private Marca marca;
+  private List<Categoria> categorias = new ArrayList<>();
+  
   public ProdutoDTO() {
   }
 
-  public ProdutoDTO(Integer id, String descricaoCurta, String descricaoDetalhada, Double valorCusto, Double valorVenda) {
+  public ProdutoDTO(Integer id, String descricaoCurta, String descricaoDetalhada, Double valorCusto, Double valorVenda, Marca marca, List<Categoria> categorias) {
     this.id = id;
     this.descricaoCurta = descricaoCurta;
     this.descricaoDetalhada = descricaoDetalhada;
     this.valorCusto = valorCusto;
     this.valorVenda = valorVenda;
+    this.marca = marca;
+    this.categorias = categorias;
   }
 
   public ProdutoDTO(Produto obj) {
@@ -31,6 +40,8 @@ public class ProdutoDTO implements Serializable {
     this.descricaoDetalhada = obj.getDescricaoDetalhada();
     this.valorCusto = obj.getValorCusto();
     this.valorVenda = obj.getValorVenda();
+    this.marca = obj.getMarca();
+    this.categorias = obj.getCategorias();
   }
 
   public Integer getId() {
@@ -71,6 +82,22 @@ public class ProdutoDTO implements Serializable {
 
   public void setValorVenda(Double valorVenda) {
     this.valorVenda = valorVenda;
+  }
+
+  public Marca getMarca() {
+    return marca;
+  }
+
+  public void setMarca(Marca marca) {
+    this.marca = marca;
+  }
+
+  public List<Categoria> getCategorias() {
+    return categorias;
+  }
+
+  public void setCategorias(List<Categoria> categorias) {
+    this.categorias = categorias;
   }
 
   @Override

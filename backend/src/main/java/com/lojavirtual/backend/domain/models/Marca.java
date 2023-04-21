@@ -2,8 +2,6 @@ package com.lojavirtual.backend.domain.models;
 
 import java.io.Serializable;
 
-import com.lojavirtual.backend.domain.dtos.MarcaDTO;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,11 +26,6 @@ public class Marca implements Serializable {
   public Marca(Integer id, String nome) {
     this.id = id;
     this.nome = nome;
-  }
-
-  public Marca(MarcaDTO obj) {
-    this.id = obj.getId();
-    this.nome = obj.getNome();
   }
 
   public Integer getId() {

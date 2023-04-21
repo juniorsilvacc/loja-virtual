@@ -20,16 +20,14 @@ public class EstadoService {
   @Autowired
   private EstadoRepository repository;
 
-  public EstadoDTO create(EstadoDTO estado) {
+  public EstadoDTO create(Estado estado) {
     Optional<Estado> nomeEstado = repository.findByNome(estado.getNome());
 
     if(nomeEstado.isPresent()) {
       throw new DataIntegrityViolationException("O nome desse estado já existe");
     }
-
-    Estado novoEstado = new Estado(estado);
     
-    Estado estadoSalvo = repository.save(novoEstado);
+    Estado estadoSalvo = repository.save(estado);
     
     EstadoDTO dto = new EstadoDTO(estadoSalvo);
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lojavirtual.backend.domain.dtos.EstadoDTO;
+import com.lojavirtual.backend.domain.models.Estado;
 import com.lojavirtual.backend.services.EstadoService;
 
 @RestController
@@ -26,7 +27,7 @@ public class EstadoController {
   private EstadoService service;
 
   @PostMapping(value = "/")
-  public ResponseEntity<EstadoDTO> create(@RequestBody EstadoDTO estado) {
+  public ResponseEntity<EstadoDTO> create(@RequestBody Estado estado) {
     EstadoDTO criarEstado = service.create(estado);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(criarEstado.getId()).toUri();
     return ResponseEntity.created(uri).body(criarEstado);

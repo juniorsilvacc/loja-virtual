@@ -1,13 +1,16 @@
 package com.lojavirtual.backend.domain.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.lojavirtual.backend.domain.dtos.CategoriaDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +24,10 @@ public class Categoria implements Serializable {
   private Integer id;
   
   private String nome;
+  
+  @JsonIgnore
+	@ManyToMany(mappedBy = "categorias")
+	private List<Produto> produtos = new ArrayList<>();
 
   public Categoria() {
   }
@@ -28,11 +35,6 @@ public class Categoria implements Serializable {
   public Categoria(Integer id, String nome) {
     this.id = id;
     this.nome = nome;
-  }
-
-  public Categoria(CategoriaDTO obj) {
-    this.id = obj.getId();
-    this.nome = obj.getNome();
   }
 
   public Integer getId() {
@@ -49,6 +51,14 @@ public class Categoria implements Serializable {
 
   public void setNome(String nome) {
     this.nome = nome;
+  }
+
+  public List<Produto> getProdutos() {
+    return produtos;
+  }
+
+  public void setProdutos(List<Produto> produtos) {
+    this.produtos = produtos;
   }
 
   @Override

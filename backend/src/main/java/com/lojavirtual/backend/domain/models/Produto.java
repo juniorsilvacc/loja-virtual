@@ -1,13 +1,17 @@
 package com.lojavirtual.backend.domain.models;
 
 import java.io.Serializable;
-
-import com.lojavirtual.backend.domain.dtos.ProdutoDTO;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +29,17 @@ public class Produto implements Serializable{
   private Double valorCusto;
   private Double valorVenda;
 
+  @ManyToOne
+  @JoinColumn(name="marca_id")
+  private Marca marca;
+
+  @ManyToMany
+	@JoinTable(name = "tb_produto_categoria", 
+		joinColumns = @JoinColumn(name = "produto_id"),
+		inverseJoinColumns = @JoinColumn(name = "categoria_id")
+	)
+	private List<Categoria> categorias = new ArrayList<>();
+
   public Produto() {
   }
 
@@ -34,14 +49,6 @@ public class Produto implements Serializable{
     this.descricaoDetalhada = descricaoDetalhada;
     this.valorCusto = valorCusto;
     this.valorVenda = valorVenda;
-  }
-
-  public Produto(ProdutoDTO obj) {
-    this.id = obj.getId();
-    this.descricaoCurta = obj.getDescricaoCurta();
-    this.descricaoDetalhada = obj.getDescricaoDetalhada();
-    this.valorCusto = obj.getValorCusto();
-    this.valorVenda = obj.getValorVenda();
   }
 
   public Integer getId() {
@@ -82,6 +89,22 @@ public class Produto implements Serializable{
 
   public void setValorVenda(Double valorVenda) {
     this.valorVenda = valorVenda;
+  }
+
+  public Marca getMarca() {
+    return marca;
+  }
+
+  public void setMarca(Marca marca) {
+    this.marca = marca;
+  }
+
+  public List<Categoria> getCategorias() {
+    return categorias;
+  }
+
+  public void setCategorias(List<Categoria> categorias) {
+    this.categorias = categorias;
   }
 
   @Override
