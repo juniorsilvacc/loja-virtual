@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -39,6 +40,9 @@ public class Produto implements Serializable{
 		inverseJoinColumns = @JoinColumn(name = "categoria_id")
 	)
 	private List<Categoria> categorias = new ArrayList<>();
+
+  @OneToMany(mappedBy = "produto")
+  private List<ProdutoImagem> imagens = new ArrayList<>();
 
   public Produto() {
   }
@@ -105,6 +109,14 @@ public class Produto implements Serializable{
 
   public void setCategorias(List<Categoria> categorias) {
     this.categorias = categorias;
+  }
+
+  public List<ProdutoImagem> getImagens() {
+    return imagens;
+  }
+
+  public void setImagens(List<ProdutoImagem> imagens) {
+    this.imagens = imagens;
   }
 
   @Override
