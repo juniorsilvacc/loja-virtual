@@ -30,6 +30,10 @@ public class Endereco implements Serializable {
 	@JoinColumn(name = "cidade_id")
 	private Cidade cidade;
 
+  @OneToOne
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
+
   public Endereco() {
   }
 
@@ -96,6 +100,14 @@ public class Endereco implements Serializable {
 
   public void setCidade(Cidade cidade) {
     this.cidade = cidade;
+  }
+
+  public Usuario getUsuario() {
+    return usuario;
+  }
+
+  public void setUsuario(Usuario usuario) {
+    this.usuario = usuario;
   }
 
   @Override

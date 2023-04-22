@@ -14,6 +14,8 @@ public class UsuarioDTO implements Serializable {
   private String email;
   private String senha;
 
+  // private Endereco endereco;
+
   public UsuarioDTO() {
   }
 
@@ -23,6 +25,7 @@ public class UsuarioDTO implements Serializable {
     this.cpf = cpf;
     this.email = email;
     this.senha = senha;
+    // this.endereco = endereco;
   }
 
   public UsuarioDTO(Usuario obj) {
@@ -31,6 +34,7 @@ public class UsuarioDTO implements Serializable {
     this.cpf = obj.getCpf();
     this.email = obj.getEmail();
     this.senha = obj.getSenha();
+    // this.endereco = obj.getEndereco();
   }
 
   public Integer getId() {
@@ -72,6 +76,14 @@ public class UsuarioDTO implements Serializable {
   public void setSenha(String senha) {
     this.senha = senha;
   }
+
+  // public Endereco getEndereco() {
+  //   return endereco;
+  // }
+
+  // public void setEndereco(Endereco endereco) {
+  //   this.endereco = endereco;
+  // }
 
   @Override
   public int hashCode() {

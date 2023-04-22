@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.lojavirtual.backend.domain.models.Cidade;
 import com.lojavirtual.backend.domain.models.Endereco;
+import com.lojavirtual.backend.domain.models.Usuario;
 
 public class EnderecoDTO implements Serializable {
   
@@ -18,11 +19,12 @@ public class EnderecoDTO implements Serializable {
 	private String bairro;
 
 	private Cidade cidade;
+  private Usuario usuario;
 
   public EnderecoDTO() {
   }
 
-  public EnderecoDTO(Integer id, String nome, String logradouro, String numero, String complemento, String bairro, Cidade cidade) {
+  public EnderecoDTO(Integer id, String nome, String logradouro, String numero, String complemento, String bairro, Cidade cidade, Usuario usuario) {
     this.id = id;
     this.nome = nome;
     this.logradouro = logradouro;
@@ -30,6 +32,7 @@ public class EnderecoDTO implements Serializable {
     this.complemento = complemento;
     this.bairro = bairro;
     this.cidade = cidade;
+    this.usuario = usuario;
   }
 
   public EnderecoDTO(Endereco obj) {
@@ -40,6 +43,7 @@ public class EnderecoDTO implements Serializable {
     this.complemento = obj.getComplemento();
     this.bairro = obj.getBairro();
     this.cidade = obj.getCidade();
+    this.usuario = obj.getUsuario();
   }
 
   public Integer getId() {
@@ -96,6 +100,14 @@ public class EnderecoDTO implements Serializable {
 
   public void setCidade(Cidade cidade) {
     this.cidade = cidade;
+  }
+
+  public Usuario getUsuario() {
+    return usuario;
+  }
+
+  public void setUsuario(Usuario usuario) {
+    this.usuario = usuario;
   }
 
   @Override

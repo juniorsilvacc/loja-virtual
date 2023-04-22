@@ -1,7 +1,9 @@
 package com.lojavirtual.backend.domain.models;
 
 import java.io.Serializable;
+
 import org.hibernate.validator.constraints.br.CPF;
+
 import com.lojavirtual.backend.domain.dtos.UsuarioDTO;
 
 import jakarta.persistence.Column;
@@ -33,6 +35,10 @@ public class Usuario implements Serializable {
   private String email;
   
   private String senha;
+
+  // @OneToOne
+  // @JoinColumn(name = "usuario_id")
+  // private Endereco endereco;
 
   public Usuario() {
   }
@@ -92,6 +98,14 @@ public class Usuario implements Serializable {
   public void setSenha(String senha) {
     this.senha = senha;
   }
+
+  // public Endereco getEndereco() {
+  //   return endereco;
+  // }
+
+  // public void setEndereco(Endereco endereco) {
+  //   this.endereco = endereco;
+  // }
 
   @Override
   public int hashCode() {
