@@ -21,9 +21,9 @@ public class PermissaoService {
   private PermissaoRepository repository;
 
   public PermissaoDTO create(Permissao permissao) {
-    Optional<Permissao> nomePermissao = repository.findByNome(permissao.getNome());
+    Permissao nomePermissao = repository.findByNome(permissao.getNome());
 
-    if(nomePermissao.isPresent()) {
+    if(nomePermissao == null) {
       throw new DataIntegrityViolationException("Essa permissao já existe");
     }
 

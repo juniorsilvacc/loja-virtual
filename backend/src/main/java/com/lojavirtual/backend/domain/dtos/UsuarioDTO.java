@@ -1,7 +1,9 @@
 package com.lojavirtual.backend.domain.dtos;
 
 import java.io.Serializable;
+import java.util.List;
 
+import com.lojavirtual.backend.domain.models.Permissao;
 import com.lojavirtual.backend.domain.models.Usuario;
 
 public class UsuarioDTO implements Serializable {
@@ -14,18 +16,18 @@ public class UsuarioDTO implements Serializable {
   private String email;
   private String senha;
 
-  // private Endereco endereco;
+  private List<Permissao> permissoes;
 
   public UsuarioDTO() {
   }
 
-  public UsuarioDTO(Integer id, String nome, String cpf, String email, String senha) {
+  public UsuarioDTO(Integer id, String nome, String cpf, String email, String senha, List<Permissao> permissoes) {
     this.id = id;
     this.nome = nome;
     this.cpf = cpf;
     this.email = email;
     this.senha = senha;
-    // this.endereco = endereco;
+    this.permissoes = permissoes;
   }
 
   public UsuarioDTO(Usuario obj) {
@@ -34,7 +36,7 @@ public class UsuarioDTO implements Serializable {
     this.cpf = obj.getCpf();
     this.email = obj.getEmail();
     this.senha = obj.getSenha();
-    // this.endereco = obj.getEndereco();
+    this.permissoes = obj.getPermissoes();
   }
 
   public Integer getId() {
@@ -77,13 +79,13 @@ public class UsuarioDTO implements Serializable {
     this.senha = senha;
   }
 
-  // public Endereco getEndereco() {
-  //   return endereco;
-  // }
+  public List<Permissao> getPermissoes() {
+    return permissoes;
+  }
 
-  // public void setEndereco(Endereco endereco) {
-  //   this.endereco = endereco;
-  // }
+  public void setPermissoes(List<Permissao> permissoes) {
+    this.permissoes = permissoes;
+  }
 
   @Override
   public int hashCode() {

@@ -1,6 +1,8 @@
 package com.lojavirtual.backend.domain.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -8,9 +10,13 @@ import com.lojavirtual.backend.domain.dtos.UsuarioDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 
@@ -36,9 +42,11 @@ public class Usuario implements Serializable {
   
   private String senha;
 
-  // @OneToOne
-  // @JoinColumn(name = "usuario_id")
-  // private Endereco endereco;
+  @ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "tb_usuario_permissao", joinColumns = {@JoinColumn (name = "usuario_id")},
+		inverseJoinColumns =  {@JoinColumn (name = "permissao_id")}
+	)
+	private List<Permissao> permissoes;
 
   public Usuario() {
   }
@@ -57,6 +65,15 @@ public class Usuario implements Serializable {
     this.cpf = obj.getCpf();
     this.email = obj.getEmail();
     this.senha = obj.getSenha();
+  }
+
+  public List<String> getRoles() {
+    List<String> roles = new ArrayList<>();
+		for (Permissao permissao : permissoes) {
+			roles.add(permissao.getNome());
+		}
+		
+		return roles ;
   }
 
   public Integer getId() {
@@ -99,13 +116,16 @@ public class Usuario implements Serializable {
     this.senha = senha;
   }
 
-  // public Endereco getEndereco() {
-  //   return endereco;
-  // }
+  public List<Permissao> getPermissoes() {
+    if (permissoes == null) {
+			permissoes = new ArrayList<>();
+		}
+		return permissoes;
+  }
 
-  // public void setEndereco(Endereco endereco) {
-  //   this.endereco = endereco;
-  // }
+  public void setPermissoes(List<Permissao> permissoes) {
+    this.permissoes = permissoes;
+  }
 
   @Override
   public int hashCode() {

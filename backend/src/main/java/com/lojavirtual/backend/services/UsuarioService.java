@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lojavirtual.backend.domain.dtos.UsuarioDTO;
+import com.lojavirtual.backend.domain.models.Permissao;
 import com.lojavirtual.backend.domain.models.Usuario;
+import com.lojavirtual.backend.repositories.PermissaoRepository;
 import com.lojavirtual.backend.repositories.UsuarioRepository;
 import com.lojavirtual.backend.services.exceptions.DataIntegrityViolationException;
 import com.lojavirtual.backend.services.exceptions.ObjectNotFoundException;
@@ -20,9 +22,13 @@ public class UsuarioService {
   @Autowired
   private UsuarioRepository repository;
 
+  @Autowired
+  private PermissaoRepository permissao;
+
   public UsuarioDTO create(Usuario usuario) {
     Optional<Usuario> emailUsuario = repository.findByEmail(usuario.getEmail());
     Optional<Usuario> cpfUsuario = repository.findByCpf(usuario.getCpf());
+    Permissao roles = permissao.findByNome("ROLE_USER");
 
     if(emailUsuario.isPresent()) {
       throw new DataIntegrityViolationException("Esse E-mail e/ou CPF já existe");
@@ -32,6 +38,7 @@ public class UsuarioService {
       throw new DataIntegrityViolationException("Esse E-mail e/ou CPF já existe");
     }
 
+    usuario.getPermissoes().add(roles);
     Usuario salvarUsuario = repository.save(usuario);
     
     UsuarioDTO dto = new UsuarioDTO(salvarUsuario);
