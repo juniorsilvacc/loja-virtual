@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lojavirtual.backend.exceptions.StandardError;
 import com.lojavirtual.backend.services.exceptions.DataIntegrityViolationException;
+import com.lojavirtual.backend.services.exceptions.FileStorageException;
 import com.lojavirtual.backend.services.exceptions.ObjectNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,5 +45,15 @@ public class CustomizedResponseEntityExceptionHandler {
 				"Data Integrity Violation", ex.getMessage(), request.getRequestURI());
 		
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(FileStorageException.class)
+	public final ResponseEntity<StandardError> fileStorageException(
+			Exception ex, HttpServletRequest request) {
+		
+		StandardError exceptionResponse = new StandardError(System.currentTimeMillis(), HttpStatus.INTERNAL_SERVER_ERROR.value(),
+				"Internal Server Error", ex.getMessage(), request.getRequestURI());
+		
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import com.lojavirtual.backend.domain.models.Categoria;
 import com.lojavirtual.backend.domain.models.Marca;
 import com.lojavirtual.backend.domain.models.Produto;
+import com.lojavirtual.backend.domain.models.ProdutoImagem;
 
 public class ProdutoDTO implements Serializable {
 
@@ -20,11 +21,13 @@ public class ProdutoDTO implements Serializable {
 
   private Marca marca;
   private List<Categoria> categorias = new ArrayList<>();
+  private List<ProdutoImagem> imagens = new ArrayList<>();
   
   public ProdutoDTO() {
   }
 
-  public ProdutoDTO(Integer id, String descricaoCurta, String descricaoDetalhada, Double valorCusto, Double valorVenda, Marca marca, List<Categoria> categorias) {
+  public ProdutoDTO(Integer id, String descricaoCurta, String descricaoDetalhada, 
+    Double valorCusto, Double valorVenda, Marca marca, List<Categoria> categorias, List<ProdutoImagem> imagens) {
     this.id = id;
     this.descricaoCurta = descricaoCurta;
     this.descricaoDetalhada = descricaoDetalhada;
@@ -32,6 +35,7 @@ public class ProdutoDTO implements Serializable {
     this.valorVenda = valorVenda;
     this.marca = marca;
     this.categorias = categorias;
+    this.imagens = imagens;
   }
 
   public ProdutoDTO(Produto obj) {
@@ -42,6 +46,7 @@ public class ProdutoDTO implements Serializable {
     this.valorVenda = obj.getValorVenda();
     this.marca = obj.getMarca();
     this.categorias = obj.getCategorias();
+    this.imagens = obj.getImagens();
   }
 
   public Integer getId() {
@@ -98,6 +103,14 @@ public class ProdutoDTO implements Serializable {
 
   public void setCategorias(List<Categoria> categorias) {
     this.categorias = categorias;
+  }
+
+  public List<ProdutoImagem> getImagens() {
+    return imagens;
+  }
+
+  public void setImagens(List<ProdutoImagem> imagens) {
+    this.imagens = imagens;
   }
 
   @Override
