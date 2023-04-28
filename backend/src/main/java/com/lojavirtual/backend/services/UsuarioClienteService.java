@@ -22,6 +22,9 @@ public class UsuarioClienteService {
   @Autowired
   private PermissaoRepository permissao;
 
+  @Autowired
+  private EmailService emailService;
+
   public UsuarioDTO register(UsuarioClienteDTO usuarioClienteDTO) {
     Usuario usuario = new UsuarioClienteDTO().converter(usuarioClienteDTO);
     Optional<Usuario> emailUsuario = repository.findByEmail(usuario.getEmail());
@@ -41,6 +44,11 @@ public class UsuarioClienteService {
     Usuario salvarUsuario = repository.save(usuario);
     
     UsuarioDTO dto = new UsuarioDTO(salvarUsuario);
+
+    emailService.enviarEmail(
+      usuarioClienteDTO.getEmail(), 
+      "Cadastro na Loja Ecommerce-Spring", 
+      "Registro na loja realizado com sucesso. Utilize a opção Esqueceu a Senha para gerar uma senha de acesso.");
 
     return dto;
   }
