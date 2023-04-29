@@ -23,8 +23,8 @@ public class PermissaoService {
   public PermissaoDTO create(Permissao permissao) {
     Permissao nomePermissao = repository.findByNome(permissao.getNome());
 
-    if(nomePermissao == null) {
-      throw new DataIntegrityViolationException("Essa permissao já existe");
+    if(nomePermissao != null) {
+      throw new DataIntegrityViolationException("Essa permissão já existe");
     }
 
     Permissao salvarPermissao = repository.save(permissao);
@@ -38,7 +38,7 @@ public class PermissaoService {
     Optional<Permissao> idPermissao = repository.findById(id);
 
     if(!idPermissao.isPresent()) {
-      throw new ObjectNotFoundException(String.format("Permissao com id: %d não encontrada", id));
+      throw new ObjectNotFoundException(String.format("Permissão com id: %d não encontrada", id));
     }
 
     repository.deleteById(id);
@@ -52,7 +52,7 @@ public class PermissaoService {
 
   public PermissaoDTO findById(Integer id) {
     Permissao permissao = repository.findById(id)
-      .orElseThrow(() -> new ObjectNotFoundException(String.format("Permissao com id: %d não encontrada", id)));
+      .orElseThrow(() -> new ObjectNotFoundException(String.format("Permissão com id: %d não encontrada", id)));
 
     PermissaoDTO dto = new PermissaoDTO(permissao);
 
@@ -63,7 +63,7 @@ public class PermissaoService {
     Optional<Permissao> oldPermissao = repository.findById(id);
 
     if(!oldPermissao.isPresent()) {
-      throw new ObjectNotFoundException(String.format("Permissao com id: %d não encontrada", id));
+      throw new ObjectNotFoundException(String.format("Permissão com id: %d não encontrada", id));
     }
 
     BeanUtils.copyProperties(permissao, oldPermissao.get(), "id");

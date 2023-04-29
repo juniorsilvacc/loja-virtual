@@ -2,6 +2,7 @@ package com.lojavirtual.backend.domain.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.validator.constraints.br.CPF;
@@ -18,6 +19,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Email;
 
 @Entity
@@ -41,6 +44,11 @@ public class Usuario implements Serializable {
   private String email;
   
   private String senha;
+
+  private String codigoRecuperacaoSenha;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date dataValidadeSenha;
 
   @ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_usuario_permissao", joinColumns = {@JoinColumn (name = "usuario_id")},
@@ -114,6 +122,22 @@ public class Usuario implements Serializable {
 
   public void setSenha(String senha) {
     this.senha = senha;
+  }
+
+  public String getCodigoRecuperacaoSenha() {
+    return codigoRecuperacaoSenha;
+  }
+
+  public void setCodigoRecuperacaoSenha(String codigoRecuperacaoSenha) {
+    this.codigoRecuperacaoSenha = codigoRecuperacaoSenha;
+  }
+
+  public Date getDataValidadeSenha() {
+    return dataValidadeSenha;
+  }
+
+  public void setDataValidadeSenha(Date dataValidadeSenha) {
+    this.dataValidadeSenha = dataValidadeSenha;
   }
 
   public List<Permissao> getPermissoes() {
