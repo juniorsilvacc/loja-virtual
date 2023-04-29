@@ -1,5 +1,7 @@
 package com.lojavirtual.backend.services;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +47,18 @@ public class UsuarioClienteService {
     
     UsuarioDTO dto = new UsuarioDTO(salvarUsuario);
 
-    emailService.enviarEmail(
-      usuarioClienteDTO.getEmail(), 
-      "Cadastro na Loja Ecommerce-Spring", 
-      "Registro na loja realizado com sucesso. Utilize a opção Esqueceu a Senha para gerar uma senha de acesso.");
+    // emailService.enviarEmail(
+    //   usuarioClienteDTO.getEmail(), 
+    //   "Cadastro na Loja Ecommerce-Spring", 
+    //   "Registro na loja realizado com sucesso. Utilize a opção Esqueceu a Senha para gerar uma senha de acesso.");
+
+    Map<String, Object> propMap = new HashMap<>();
+    propMap.put("nome", salvarUsuario.getNome());
+    propMap.put("mensagem", "Registro na loja realizado com sucesso. Utilize a opção Esqueceu a Senha para gerar uma senha de acesso.");
+    emailService.enviarEmailTemplate(usuarioClienteDTO.getEmail(), "Cadastro na Loja Ecommerce-Spring", propMap);
 
     return dto;
+    
   }
 
 }
