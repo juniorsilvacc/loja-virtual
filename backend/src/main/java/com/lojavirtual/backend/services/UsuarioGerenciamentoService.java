@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.lojavirtual.backend.domain.models.Usuario;
 import com.lojavirtual.backend.repositories.UsuarioRepository;
 import com.lojavirtual.backend.services.exceptions.ObjectNotFoundException;
+import com.lojavirtual.backend.services.exceptions.TimeExpiredException;
 
 @Service
 public class UsuarioGerenciamentoService {
@@ -57,7 +58,7 @@ public class UsuarioGerenciamentoService {
 
       return "Senha alterada com sucesso!";
     } else {
-      return "Tempo expirado, solicite um novo código.";
+      throw new TimeExpiredException("Tempo expirado, solicite um novo código");
     }
   }
 

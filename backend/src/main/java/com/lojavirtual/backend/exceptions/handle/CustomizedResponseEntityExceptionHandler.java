@@ -10,6 +10,7 @@ import com.lojavirtual.backend.exceptions.StandardError;
 import com.lojavirtual.backend.services.exceptions.DataIntegrityViolationException;
 import com.lojavirtual.backend.services.exceptions.FileStorageException;
 import com.lojavirtual.backend.services.exceptions.ObjectNotFoundException;
+import com.lojavirtual.backend.services.exceptions.TimeExpiredException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -55,5 +56,15 @@ public class CustomizedResponseEntityExceptionHandler {
 				"Internal Server Error", ex.getMessage(), request.getRequestURI());
 		
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@ExceptionHandler(TimeExpiredException.class)
+	public final ResponseEntity<StandardError> timeExpiredException(
+			Exception ex, HttpServletRequest request) {
+		
+		StandardError exceptionResponse = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
+				"Time Expired", ex.getMessage(), request.getRequestURI());
+		
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 }
