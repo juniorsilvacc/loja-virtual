@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_produto_imagem")
@@ -28,6 +29,9 @@ public class ProdutoImagem implements Serializable {
   @ManyToOne
   @JoinColumn(name = "produto_id")
   private Produto produto;
+
+  @Transient
+  private byte[] arquivo;
 
   public ProdutoImagem() {
   }
@@ -59,6 +63,14 @@ public class ProdutoImagem implements Serializable {
 
   public void setProduto(Produto produto) {
     this.produto = produto;
+  }
+
+  public byte[] getArquivo() {
+    return arquivo;
+  }
+
+  public void setArquivo(byte[] arquivo) {
+    this.arquivo = arquivo;
   }
 
   @Override
