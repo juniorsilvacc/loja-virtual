@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lojavirtual.backend.domain.models.Usuario;
@@ -20,6 +21,9 @@ public class UsuarioGerenciamentoService {
 
   @Autowired
   private EmailService emailService;
+
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   public String solicitarSenha(String email) {
     Usuario usuario = repository.findByEmail(email).get();
@@ -51,7 +55,7 @@ public class UsuarioGerenciamentoService {
     Date diferenca = new Date(new Date().getTime() - usuarioBancoDados.getDataValidadeSenha().getTime());
 
     if(diferenca.getTime() / 1000 < 900) {
-      usuarioBancoDados.setSenha(usuario.getSenha());
+      usuarioBancoDados.setSenha(passwordEncoder.encode(usuario.getSenha()));
       usuarioBancoDados.setCodigoRecuperacaoSenha(null);
 
       repository.save(usuarioBancoDados);
