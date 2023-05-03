@@ -10,20 +10,20 @@ import com.lojavirtual.backend.domain.models.Usuario;
 import com.lojavirtual.backend.services.UsuarioGerenciamentoService;
 
 @RestController
-@RequestMapping(value = "/api/usuarios-gerenciamentos")
+@RequestMapping(value = "/api/usuarios/usuario-gerenciamento")
 public class UsuarioGerenciamentoController {
 
   @Autowired
   private UsuarioGerenciamentoService service;
 
   @PostMapping(value = "/solicitar-senha")
-  public String solicitarSenha(@RequestBody Usuario Usuario) {
-    return service.solicitarSenha(Usuario.getEmail());
+  public String solicitarSenha(@RequestBody Usuario usuario) {
+    return service.solicitarSenha(usuario.getEmail());
   }
 
   @PostMapping(value = "/alterar-senha")
-  public String alterarSenha(@RequestBody Usuario Usuario) {
-    return service.alterarSenha(Usuario);
+  public String alterarSenha(@RequestBody Usuario usuario) {
+    return service.alterarSenha(usuario);
   }
-  
+
 }

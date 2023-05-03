@@ -15,13 +15,13 @@ import com.lojavirtual.backend.domain.dtos.UsuarioDTO;
 import com.lojavirtual.backend.services.UsuarioClienteService;
 
 @RestController
-@RequestMapping(value = "/api/usuarios/clientes")
+@RequestMapping(value = "/api/clientes")
 public class UsuarioClienteController {
 
   @Autowired
   private UsuarioClienteService service;
 
-  @PostMapping(value = "/")
+  @PostMapping(value = "/registrar")
   public ResponseEntity<UsuarioDTO> register(@RequestBody UsuarioClienteDTO usuarioClienteDTO) {
     UsuarioDTO registrarCliente = service.register(usuarioClienteDTO);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(registrarCliente.getId())

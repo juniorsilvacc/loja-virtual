@@ -6,10 +6,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lojavirtual.backend.domain.dtos.UsuarioDTO;
+import com.lojavirtual.backend.domain.models.Permissao;
 import com.lojavirtual.backend.domain.models.Usuario;
+import com.lojavirtual.backend.repositories.PermissaoRepository;
 import com.lojavirtual.backend.repositories.UsuarioRepository;
 import com.lojavirtual.backend.services.exceptions.DataIntegrityViolationException;
 import com.lojavirtual.backend.services.exceptions.ObjectNotFoundException;
@@ -20,9 +23,24 @@ public class UsuarioService {
   @Autowired
   private UsuarioRepository repository;
 
+  @Autowired
+  private PermissaoRepository permissao;
+
+  @Autowired
+  private EmailService emailService;
+
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
   public UsuarioDTO create(Usuario usuario) {
     Optional<Usuario> emailUsuario = repository.findByEmail(usuario.getEmail());
     Optional<Usuario> cpfUsuario = repository.findByCpf(usuario.getCpf());
+
+    Permissao role = permissao.findByNome("ROLE_GERENT");
+
+    if(role == null) {
+      throw new DataIntegrityViolationException("Essa permissão ainda não está cadastrada no sistema");
+    }
 
     if(emailUsuario.isPresent()) {
       throw new DataIntegrityViolationException("Esse E-mail e/ou CPF já existe");
@@ -32,7 +50,14 @@ public class UsuarioService {
       throw new DataIntegrityViolationException("Esse E-mail e/ou CPF já existe");
     }
 
+    usuario.getPermissoes().add(role);
+    usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
     Usuario salvarUsuario = repository.save(usuario);
+
+    emailService.enviarEmail(
+      usuario.getEmail(), 
+      "Bem vindo! Você agora pode fazer o gerenciamento da loja virtual.", 
+      "Olá, " + usuario.getNome() + ". Você é um dos novos funcionários da loja!");
     
     UsuarioDTO dto = new UsuarioDTO(salvarUsuario);
 

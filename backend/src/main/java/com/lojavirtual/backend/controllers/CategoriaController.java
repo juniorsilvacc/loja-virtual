@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +23,14 @@ import com.lojavirtual.backend.services.CategoriaService;
 
 @RestController
 @RequestMapping(value = "/api/categorias")
+@EnableMethodSecurity(prePostEnabled = true)
 public class CategoriaController {
 
   @Autowired
   private CategoriaService service;
 
   @PostMapping(value = "/")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<CategoriaDTO> create(@RequestBody Categoria categoria) {
     CategoriaDTO criarCategoria = service.create(categoria);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(criarCategoria.getId())
@@ -35,6 +39,7 @@ public class CategoriaController {
   }
 
   @DeleteMapping(value = "/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public void remove(@PathVariable Integer id) {
     service.remove(id);
   }
@@ -54,6 +59,7 @@ public class CategoriaController {
   }
 
   @PutMapping(value = "/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<CategoriaDTO> update(@RequestBody Categoria categoria, @PathVariable Integer id) {
     CategoriaDTO atualizarCategoria = service.update(categoria, id);
 

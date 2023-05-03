@@ -1,11 +1,13 @@
 package com.lojavirtual.backend.domain.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.lojavirtual.backend.domain.dtos.UsuarioDTO;
 
@@ -25,9 +27,7 @@ import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "tb_usuario")
-public class Usuario implements Serializable {
-
-  private static final long serialVersionUID = 1L;
+public class Usuario implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,6 +82,41 @@ public class Usuario implements Serializable {
 		}
 		
 		return roles ;
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return this.permissoes;
+  }
+
+  @Override
+  public String getPassword() {
+    return senha;
+  }
+
+  @Override
+  public String getUsername() {
+    return email;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
   }
 
   public Integer getId() {

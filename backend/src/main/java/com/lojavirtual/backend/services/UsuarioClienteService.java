@@ -34,6 +34,10 @@ public class UsuarioClienteService {
     
     Permissao role = permissao.findByNome("ROLE_USER");
 
+    if(role == null) {
+      throw new DataIntegrityViolationException("Essa permissão ainda não está cadastrada no sistema");
+    }
+
     if(emailUsuario.isPresent()) {
       throw new DataIntegrityViolationException("Esse E-mail e/ou CPF já existe");
     }

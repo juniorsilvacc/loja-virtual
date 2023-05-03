@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +23,14 @@ import com.lojavirtual.backend.services.MarcaService;
 
 @RestController
 @RequestMapping(value = "/api/marcas")
+@EnableMethodSecurity(prePostEnabled = true)
 public class MarcaController {
 
   @Autowired
   private MarcaService service;
 
   @PostMapping(value = "/")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<MarcaDTO> create(@RequestBody Marca marca) {
     MarcaDTO criarMarca = service.create(marca);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(criarMarca.getId())
@@ -35,6 +39,7 @@ public class MarcaController {
   }
 
   @DeleteMapping(value = "/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public void remove(@PathVariable Integer id) {
     service.remove(id);
   }
@@ -54,6 +59,7 @@ public class MarcaController {
   }
 
   @PutMapping(value = "/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<MarcaDTO> update(@RequestBody Marca marca, @PathVariable Integer id) {
     MarcaDTO atualizarMarca = service.update(marca, id);
 
