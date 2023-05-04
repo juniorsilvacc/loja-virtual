@@ -1,6 +1,6 @@
 package com.lojavirtual.backend.domain.models;
 
-import java.io.Serializable;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.lojavirtual.backend.domain.dtos.PermissaoDTO;
 
@@ -12,9 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_permissao")
-public class Permissao implements Serializable{
-  
-  private static final long serialVersionUID = 1L;
+public class Permissao implements GrantedAuthority {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +47,11 @@ public class Permissao implements Serializable{
 
   public void setNome(String nome) {
     this.nome = nome;
+  }
+
+  @Override
+  public String getAuthority() {
+    return this.nome;
   }
 
   @Override

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +23,14 @@ import com.lojavirtual.backend.services.PermissaoService;
 
 @RestController
 @RequestMapping(value = "/api/permissoes")
+@EnableMethodSecurity(prePostEnabled = true)
 public class PermissaoController {
 
   @Autowired
   private PermissaoService service;
 
   @PostMapping(value = "/")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<PermissaoDTO> create(@RequestBody Permissao permissao) {
     PermissaoDTO criarPermissao = service.create(permissao);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(criarPermissao.getId())
@@ -35,11 +39,13 @@ public class PermissaoController {
   }
 
   @DeleteMapping(value = "/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public void remove(@PathVariable Integer id) {
     service.remove(id);
   }
 
   @GetMapping(value = "/")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<List<PermissaoDTO>> findAll() {
     List<PermissaoDTO> todasPermissoes = service.findAll();
 
@@ -47,6 +53,7 @@ public class PermissaoController {
   }
 
   @GetMapping(value = "/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<PermissaoDTO> findById(@PathVariable Integer id) {
     PermissaoDTO permissao = service.findById(id);
 
@@ -54,6 +61,7 @@ public class PermissaoController {
   }
 
   @PutMapping(value = "/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<PermissaoDTO> update(@RequestBody Permissao permissao, @PathVariable Integer id) {
     PermissaoDTO atualizarPermissao = service.update(permissao, id);
 

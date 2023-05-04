@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +23,14 @@ import com.lojavirtual.backend.services.ProdutoService;
 
 @RestController
 @RequestMapping(value = "/api/produtos")
+@EnableMethodSecurity(prePostEnabled = true)
 public class ProdutoController {
 
   @Autowired
   private ProdutoService service;
 
   @PostMapping(value = "/")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<ProdutoDTO> create(@RequestBody Produto produto) {
     ProdutoDTO criarProduto = service.create(produto);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(criarProduto.getId())
@@ -35,6 +39,7 @@ public class ProdutoController {
   }
 
   @DeleteMapping(value = "/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public void remove(@PathVariable Integer id) {
     service.remove(id);
   }
@@ -54,10 +59,11 @@ public class ProdutoController {
   }
 
   @PutMapping(value = "/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<ProdutoDTO> update(@RequestBody Produto produto, @PathVariable Integer id) {
     ProdutoDTO atualizarProduto = service.update(produto, id);
 
     return ResponseEntity.ok().body(atualizarProduto);
   }
-
+  
 }
