@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.lojavirtual.backend.services.UsuarioDetailsService;
+import com.lojavirtual.backend.services.exceptions.InvalidAuthenticationException;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -41,7 +42,7 @@ public class AuthorizationFilterToken extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
       }
     } catch (Exception e) {
-      System.out.println("Não foi possível setar a autenticação do usuário"+ e.getMessage());
+      throw new InvalidAuthenticationException("Não foi possível setar a autenticação do usuário");
     }
 
     filterChain.doFilter(request, response);

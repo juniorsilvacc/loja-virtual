@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -21,16 +22,17 @@ public class JwtUtil {
 
   private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
-  // @Value("${jwt.expiration}")
-  private Integer expiration = 604800000;
+  @Value("${jwt.expiration}")
+  private Integer expiration;
 
-  // @Value("${jwt.secret}")
-  private String secret = "StringUsadaParaGerarToken";
+  @Value("${jwt.secret}")
+  private String secret;
 
   public String gerarToken(Usuario usuario) {
     return Jwts.builder()
         .setSubject(usuario.getEmail())
         .claim("roles", usuario.getRoles())
+        .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + expiration))
         .signWith(SignatureAlgorithm.HS512, secret)
         .compact();

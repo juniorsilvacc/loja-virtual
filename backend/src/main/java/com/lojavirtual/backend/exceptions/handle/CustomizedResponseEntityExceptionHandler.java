@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lojavirtual.backend.exceptions.StandardError;
 import com.lojavirtual.backend.services.exceptions.DataIntegrityViolationException;
 import com.lojavirtual.backend.services.exceptions.FileStorageException;
+import com.lojavirtual.backend.services.exceptions.InvalidAuthenticationException;
 import com.lojavirtual.backend.services.exceptions.ObjectNotFoundException;
 import com.lojavirtual.backend.services.exceptions.TimeExpiredException;
 
@@ -66,5 +67,15 @@ public class CustomizedResponseEntityExceptionHandler {
 				"Time Expired", ex.getMessage(), request.getRequestURI());
 		
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(InvalidAuthenticationException.class)
+	public final ResponseEntity<StandardError> invalidAuthenticationException(
+			Exception ex, HttpServletRequest request) {
+		
+		StandardError exceptionResponse = new StandardError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(),
+				"Invalid Authentication", ex.getMessage(), request.getRequestURI());
+		
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
 	}
 }
