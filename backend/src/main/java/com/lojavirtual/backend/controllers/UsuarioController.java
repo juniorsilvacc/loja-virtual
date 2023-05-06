@@ -22,7 +22,7 @@ import com.lojavirtual.backend.domain.models.Usuario;
 import com.lojavirtual.backend.services.UsuarioService;
 
 @RestController
-@RequestMapping(value = "/api/usuarios/funcionarios")
+@RequestMapping(value = "/api/usuarios")
 @EnableMethodSecurity(prePostEnabled = true)
 public class UsuarioController {
 
