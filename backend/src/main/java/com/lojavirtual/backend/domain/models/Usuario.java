@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lojavirtual.backend.domain.dtos.UsuarioDTO;
 
 import jakarta.persistence.Column;
@@ -20,6 +21,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -40,7 +42,7 @@ public class Usuario implements UserDetails {
   private String cpf;
 
   @Email
-  @Column(unique = true)
+  @Column(unique = true) 
   private String email;
   
   private String senha;
@@ -55,6 +57,10 @@ public class Usuario implements UserDetails {
 		inverseJoinColumns =  {@JoinColumn (name = "permissao_id")}
 	)
 	private List<Permissao> permissoes;
+
+  @JsonIgnore
+  @OneToOne(mappedBy = "usuario")
+  private CarrinhoCompra carrinhoCompra;
 
   public Usuario() {
   }
@@ -184,6 +190,14 @@ public class Usuario implements UserDetails {
 
   public void setPermissoes(List<Permissao> permissoes) {
     this.permissoes = permissoes;
+  }
+  
+  public CarrinhoCompra getCarrinhoCompra() {
+    return carrinhoCompra;
+  }
+
+  public void setCarrinhoCompra(CarrinhoCompra carrinhoCompra) {
+    this.carrinhoCompra = carrinhoCompra;
   }
 
   @Override

@@ -51,6 +51,14 @@ public class CarrinhoCompra implements Serializable {
     this.endereco = endereco;
   }
 
+  public Double getTotal() {
+    double soma = 0.0;
+    for(CarrinhoCompraItem x : carrinhoCompraItems) {
+      soma = soma + x.getSubTotal();
+    }
+    return soma;
+  }
+
   public Integer getId() {
     return id;
   }
@@ -67,7 +75,6 @@ public class CarrinhoCompra implements Serializable {
     this.dataCompra = dataCompra;
   }
 
-  @JsonIgnore
   public Usuario getUsuario() {
     return usuario;
   }
@@ -76,7 +83,6 @@ public class CarrinhoCompra implements Serializable {
     this.usuario = usuario;
   }
 
-  @JsonIgnore
   public Endereco getEndereco() {
     return endereco;
   }
@@ -85,7 +91,6 @@ public class CarrinhoCompra implements Serializable {
     this.endereco = endereco;
   }
 
-  @JsonIgnore
   public List<CarrinhoCompraItem> getCarrinhoCompraItems() {
     return carrinhoCompraItems;
   }

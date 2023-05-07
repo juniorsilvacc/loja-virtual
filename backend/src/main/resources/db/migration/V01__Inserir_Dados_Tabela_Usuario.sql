@@ -1,0 +1,2 @@
+INSERT INTO tb_usuario (nome, cpf, email, senha, codigo_recuperacao_senha, data_validade_senha) VALUES
+	('ADMIN', '45164383560', 'admin@gmail.com', '$2a$12$l.mXf/KfPbu9xr4nqkoU9OMd6UGTncEf/s2otWXN4HlzFhhv/aN7W', null, null);

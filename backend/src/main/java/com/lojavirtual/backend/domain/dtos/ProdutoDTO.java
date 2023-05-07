@@ -16,8 +16,7 @@ public class ProdutoDTO implements Serializable {
   private Integer id;
   private String descricaoCurta;
   private String descricaoDetalhada;
-  private Double valorCusto;
-  private Double valorVenda;
+  private Double valor;
 
   private Marca marca;
   private List<Categoria> categorias = new ArrayList<>();
@@ -27,12 +26,11 @@ public class ProdutoDTO implements Serializable {
   }
 
   public ProdutoDTO(Integer id, String descricaoCurta, String descricaoDetalhada, 
-    Double valorCusto, Double valorVenda, Marca marca, List<Categoria> categorias, List<ProdutoImagem> imagens) {
+    Double valor, Marca marca, List<Categoria> categorias, List<ProdutoImagem> imagens) {
     this.id = id;
     this.descricaoCurta = descricaoCurta;
     this.descricaoDetalhada = descricaoDetalhada;
-    this.valorCusto = valorCusto;
-    this.valorVenda = valorVenda;
+    this.valor = valor;
     this.marca = marca;
     this.categorias = categorias;
     this.imagens = imagens;
@@ -42,8 +40,7 @@ public class ProdutoDTO implements Serializable {
     this.id = obj.getId();
     this.descricaoCurta = obj.getDescricaoCurta();
     this.descricaoDetalhada = obj.getDescricaoDetalhada();
-    this.valorCusto = obj.getValorCusto();
-    this.valorVenda = obj.getValorVenda();
+    this.valor = obj.getValor();
     this.marca = obj.getMarca();
     this.categorias = obj.getCategorias();
     this.imagens = obj.getImagens();
@@ -73,20 +70,12 @@ public class ProdutoDTO implements Serializable {
     this.descricaoDetalhada = descricaoDetalhada;
   }
 
-  public Double getValorCusto() {
-    return valorCusto;
+  public Double getValor() {
+    return valor;
   }
 
-  public void setValorCusto(Double valorCusto) {
-    this.valorCusto = valorCusto;
-  }
-
-  public Double getValorVenda() {
-    return valorVenda;
-  }
-
-  public void setValorVenda(Double valorVenda) {
-    this.valorVenda = valorVenda;
+  public void setValor(Double valor) {
+    this.valor = valor;
   }
 
   public Marca getMarca() {

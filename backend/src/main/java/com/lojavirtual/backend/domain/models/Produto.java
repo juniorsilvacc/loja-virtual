@@ -27,8 +27,7 @@ public class Produto implements Serializable{
   
   private String descricaoCurta;
   private String descricaoDetalhada;
-  private Double valorCusto;
-  private Double valorVenda;
+  private Double valor;
 
   @ManyToOne
   @JoinColumn(name="marca_id")
@@ -47,12 +46,11 @@ public class Produto implements Serializable{
   public Produto() {
   }
 
-  public Produto(Integer id, String descricaoCurta, String descricaoDetalhada, Double valorCusto, Double valorVenda) {
+  public Produto(Integer id, String descricaoCurta, String descricaoDetalhada, Double valor) {
     this.id = id;
     this.descricaoCurta = descricaoCurta;
     this.descricaoDetalhada = descricaoDetalhada;
-    this.valorCusto = valorCusto;
-    this.valorVenda = valorVenda;
+    this.valor = valor;
   }
 
   public Integer getId() {
@@ -79,20 +77,12 @@ public class Produto implements Serializable{
     this.descricaoDetalhada = descricaoDetalhada;
   }
 
-  public Double getValorCusto() {
-    return valorCusto;
+  public Double getValor() {
+    return valor;
   }
 
-  public void setValorCusto(Double valorCusto) {
-    this.valorCusto = valorCusto;
-  }
-
-  public Double getValorVenda() {
-    return valorVenda;
-  }
-
-  public void setValorVenda(Double valorVenda) {
-    this.valorVenda = valorVenda;
+  public void setValor(Double valor) {
+    this.valor = valor;
   }
 
   public Marca getMarca() {

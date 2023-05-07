@@ -1,0 +1,1 @@
+INSERT INTO tb_usuario_permissao (usuario_id, permissao_id) VALUES (1, 1);

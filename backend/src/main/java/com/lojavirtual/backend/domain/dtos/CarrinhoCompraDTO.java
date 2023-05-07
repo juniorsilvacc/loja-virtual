@@ -15,7 +15,6 @@ public class CarrinhoCompraDTO implements Serializable {
 
   private Integer id;
   private Date dataCompra;
-  
   private Endereco endereco;
   private List<CarrinhoCompraItem> carrinhoCompraItems = new ArrayList<>();
 
@@ -32,7 +31,6 @@ public class CarrinhoCompraDTO implements Serializable {
   public CarrinhoCompraDTO(CarrinhoCompra obj) {
     this.id = obj.getId();
     this.dataCompra = obj.getDataCompra();
-   
     this.endereco = obj.getEndereco();
     this.carrinhoCompraItems = obj.getCarrinhoCompraItems();
   }

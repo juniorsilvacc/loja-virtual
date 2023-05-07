@@ -2,6 +2,8 @@ package com.lojavirtual.backend.domain.models;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +22,6 @@ public class CarrinhoCompraItem implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-  private Double valor;
   private Integer quantidade;
 
   @ManyToOne
@@ -34,13 +35,16 @@ public class CarrinhoCompraItem implements Serializable{
   public CarrinhoCompraItem() {
   }
 
-  public CarrinhoCompraItem(Integer id, Double valor, Integer quantidade, CarrinhoCompra carrinhoCompra,
+  public CarrinhoCompraItem(Integer id, Integer quantidade, CarrinhoCompra carrinhoCompra,
       Produto produto) {
     this.id = id;
-    this.valor = valor;
     this.quantidade = quantidade;
     this.carrinhoCompra = carrinhoCompra;
     this.produto = produto;
+  }
+
+  public Double getSubTotal() {
+    return produto.getValor() * quantidade;
   }
 
   public Integer getId() {
@@ -51,14 +55,6 @@ public class CarrinhoCompraItem implements Serializable{
     this.id = id;
   }
 
-  public Double getValor() {
-    return valor;
-  }
-
-  public void setValor(Double valor) {
-    this.valor = valor;
-  }
-
   public Integer getQuantidade() {
     return quantidade;
   }
@@ -67,6 +63,7 @@ public class CarrinhoCompraItem implements Serializable{
     this.quantidade = quantidade;
   }
 
+  @JsonIgnore
   public CarrinhoCompra getCarrinhoCompra() {
     return carrinhoCompra;
   }

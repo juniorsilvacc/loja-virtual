@@ -2,6 +2,7 @@ package com.lojavirtual.backend.domain.dtos;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lojavirtual.backend.domain.models.CarrinhoCompra;
 import com.lojavirtual.backend.domain.models.CarrinhoCompraItem;
 import com.lojavirtual.backend.domain.models.Produto;
@@ -11,7 +12,6 @@ public class CarrinhoCompraItemDTO implements Serializable{
   private static final long serialVersionUID = 1L;
 
   private Integer id;
-  private Double valor;
   private Integer quantidade;
   private CarrinhoCompra carrinhoCompra;
   private Produto produto;
@@ -19,10 +19,9 @@ public class CarrinhoCompraItemDTO implements Serializable{
   public CarrinhoCompraItemDTO() {
   }
 
-  public CarrinhoCompraItemDTO(Integer id, Double valor, Integer quantidade, CarrinhoCompra carrinhoCompra,
+  public CarrinhoCompraItemDTO(Integer id, Integer quantidade, CarrinhoCompra carrinhoCompra,
       Produto produto) {
     this.id = id;
-    this.valor = valor;
     this.quantidade = quantidade;
     this.carrinhoCompra = carrinhoCompra;
     this.produto = produto;
@@ -30,7 +29,6 @@ public class CarrinhoCompraItemDTO implements Serializable{
 
   public CarrinhoCompraItemDTO(CarrinhoCompraItem obj) {
     this.id = obj.getId();
-    this.valor = obj.getValor();
     this.quantidade = obj.getQuantidade();
     this.carrinhoCompra = obj.getCarrinhoCompra();
     this.produto = obj.getProduto();
@@ -42,14 +40,6 @@ public class CarrinhoCompraItemDTO implements Serializable{
 
   public void setId(Integer id) {
     this.id = id;
-  }
-
-  public Double getValor() {
-    return valor;
-  }
-
-  public void setValor(Double valor) {
-    this.valor = valor;
   }
 
   public Integer getQuantidade() {
@@ -68,6 +58,7 @@ public class CarrinhoCompraItemDTO implements Serializable{
     this.carrinhoCompra = carrinhoCompra;
   }
 
+  @JsonIgnore
   public Produto getProduto() {
     return produto;
   }
