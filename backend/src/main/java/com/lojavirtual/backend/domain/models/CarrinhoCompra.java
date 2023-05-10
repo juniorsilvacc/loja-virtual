@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,7 +37,7 @@ public class CarrinhoCompra implements Serializable {
   @JoinColumn(name = "endereco_id")
   private Endereco endereco;
 
-  @OneToMany(mappedBy = "carrinhoCompra")
+  @OneToMany(mappedBy = "id.carrinhoCompra")
   private List<CarrinhoCompraItem> carrinhoCompraItems = new ArrayList<>();
  
   public CarrinhoCompra() {
@@ -86,7 +85,7 @@ public class CarrinhoCompra implements Serializable {
   public Endereco getEndereco() {
     return endereco;
   }
-
+ 
   public void setEndereco(Endereco endereco) {
     this.endereco = endereco;
   }

@@ -3,56 +3,53 @@ package com.lojavirtual.backend.domain.models;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lojavirtual.backend.domain.models.pk.CarrinhoCompraItemPK;
 
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_carrinho_compra_item")
+@Table(name = "tb_carrinho_compra_item") 
 public class CarrinhoCompraItem implements Serializable{
 
   private static final long serialVersionUID = 1L;
 
-  @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+  @EmbeddedId
+	private CarrinhoCompraItemPK id = new CarrinhoCompraItemPK();
 
   private Integer quantidade;
-
-  @ManyToOne
-  @JoinColumn(name = "carrinho_compra_id")
-  private CarrinhoCompra carrinhoCompra;
-
-  @ManyToOne
-  @JoinColumn(name = "produto_id")
-  private Produto produto;
+  private Double valor; 
 
   public CarrinhoCompraItem() {
-  }
+  } 
 
-  public CarrinhoCompraItem(Integer id, Integer quantidade, CarrinhoCompra carrinhoCompra,
-      Produto produto) {
-    this.id = id;
+  public CarrinhoCompraItem(CarrinhoCompra carrinhoCompra, Produto produto, Integer quantidade, Double valor) {
+    id.setCarrinhoCompra(carrinhoCompra);
+    id.setProduto(produto);
     this.quantidade = quantidade;
-    this.carrinhoCompra = carrinhoCompra;
-    this.produto = produto;
+    this.valor = valor;
   }
 
   public Double getSubTotal() {
-    return produto.getValor() * quantidade;
+    return valor * quantidade;
   }
 
-  public Integer getId() {
-    return id;
+  @JsonIgnore
+  public CarrinhoCompra getCarrinhoCompra() {
+    return id.getCarrinhoCompra();
   }
 
-  public void setId(Integer id) {
-    this.id = id;
+  public void setCarrinhoCompra(CarrinhoCompra carrinhoCompra) {
+    id.setCarrinhoCompra(carrinhoCompra);
+  }
+
+  public Produto getProduto() {
+    return id.getProduto();
+  }
+
+  public void setProduto(Produto produto) {
+    id.setProduto(produto);
   }
 
   public Integer getQuantidade() {
@@ -63,21 +60,12 @@ public class CarrinhoCompraItem implements Serializable{
     this.quantidade = quantidade;
   }
 
-  @JsonIgnore
-  public CarrinhoCompra getCarrinhoCompra() {
-    return carrinhoCompra;
+  public Double getValor() {
+    return valor;
   }
 
-  public void setCarrinhoCompra(CarrinhoCompra carrinhoCompra) {
-    this.carrinhoCompra = carrinhoCompra;
-  }
-
-  public Produto getProduto() {
-    return produto;
-  }
-
-  public void setProduto(Produto produto) {
-    this.produto = produto;
+  public void setValor(Double valor) {
+    this.valor = valor;
   }
 
   @Override
