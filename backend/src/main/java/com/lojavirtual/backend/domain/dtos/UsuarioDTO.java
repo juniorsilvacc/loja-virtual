@@ -1,0 +1,115 @@
+package com.lojavirtual.backend.domain.dtos;
+
+import java.io.Serializable;
+import java.util.List;
+
+import com.lojavirtual.backend.domain.models.Permissao;
+import com.lojavirtual.backend.domain.models.Usuario;
+
+public class UsuarioDTO implements Serializable {
+
+  private static final long serialVersionUID = 1L;
+
+  private Integer id;
+  private String nome;
+  private String cpf;
+  private String email;
+  private String senha;
+
+  private List<Permissao> permissoes;
+
+  public UsuarioDTO() {
+  }
+
+  public UsuarioDTO(Integer id, String nome, String cpf, String email, String senha, List<Permissao> permissoes) {
+    this.id = id;
+    this.nome = nome;
+    this.cpf = cpf;
+    this.email = email;
+    this.senha = senha;
+    this.permissoes = permissoes;
+  }
+
+  public UsuarioDTO(Usuario obj) {
+    this.id = obj.getId();
+    this.nome = obj.getNome();
+    this.cpf = obj.getCpf();
+    this.email = obj.getEmail();
+    this.senha = obj.getSenha();
+    this.permissoes = obj.getPermissoes();
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public String getNome() {
+    return nome;
+  }
+
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
+
+  public String getCpf() {
+    return cpf;
+  }
+
+  public void setCpf(String cpf) {
+    this.cpf = cpf;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getSenha() {
+    return senha;
+  }
+
+  public void setSenha(String senha) {
+    this.senha = senha;
+  }
+
+  public List<Permissao> getPermissoes() {
+    return permissoes;
+  }
+
+  public void setPermissoes(List<Permissao> permissoes) {
+    this.permissoes = permissoes;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((id == null) ? 0 : id.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    UsuarioDTO other = (UsuarioDTO) obj;
+    if (id == null) {
+      if (other.id != null)
+        return false;
+    } else if (!id.equals(other.id))
+      return false;
+    return true;
+  }
+
+}

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class Hello {
+public class Test {
   
   @GetMapping(value = "/")
   public String hello() {
